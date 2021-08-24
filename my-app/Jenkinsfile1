@@ -1,0 +1,17 @@
+pipeline{
+    agent any
+    tools {
+    maven 'Maven_local'
+    }
+    stages {
+        stage('git_clone') {
+            steps {
+                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '14a74601-3287-4b84-97a3-0930c1510c7c', url: 'https://github.com/rushikeshsawant143/jenkins-pipeline-example.git']]])
+                dir('my-app') {
+                    sh 'mvn clean install'
+                    sh 'pwd'
+                }
+            }
+        }  
+    }
+}
